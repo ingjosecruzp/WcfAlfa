@@ -1,0 +1,486 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="alfadbModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="categorias">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="40" Nullable="false" />
+        </EntityType>
+        <EntityType Name="codigos">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Codigo" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="Tipo" Type="enum" Nullable="false" />
+          <Property Name="Activo" Type="enum" Nullable="false" />
+          <Property Name="TotalLibros" Type="int" Nullable="false" />
+          <Property Name="CantidadRestante" Type="int" />
+          <Property Name="UUID" Type="varchar" MaxLength="40" />
+        </EntityType>
+        <EntityType Name="especialidades">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="45" Nullable="false" />
+        </EntityType>
+        <EntityType Name="libros">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="NumeroPaginas" Type="int" />
+          <Property Name="AnoEdicion" Type="int" />
+          <Property Name="Grado" Type="varchar" MaxLength="30" />
+          <Property Name="EspecialidadId" Type="bigint" />
+          <Property Name="Ruta" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="RutaThumbnails" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="Width" Type="decimal" Precision="10" Scale="0" />
+          <Property Name="Height" Type="decimal" Precision="10" Scale="0" />
+          <Property Name="Resena" Type="text" />
+          <Property Name="tags" Type="text" Nullable="false" />
+          <Property Name="RutaImgResena" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="Version" Type="tinyint" />
+        </EntityType>
+        <EntityType Name="libroscategorias">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LibroId" Type="bigint" Nullable="false" />
+          <Property Name="CategoriaId" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="libroscodigos">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CodigoId" Type="bigint" Nullable="false" />
+          <Property Name="LibroId" Type="bigint" />
+          <Property Name="UUID" Type="varchar" MaxLength="40" />
+          <Property Name="Activo" Type="enum" Nullable="false" />
+        </EntityType>
+        <EntityType Name="versiones">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LibroId" Type="bigint" />
+          <Property Name="Version" Type="tinyint" />
+          <Property Name="NombreArchivo" Type="varchar" MaxLength="25" />
+        </EntityType>
+        <Association Name="fk_LibrosCodigos_Codigos">
+          <End Role="codigos" Type="Self.codigos" Multiplicity="1" />
+          <End Role="libroscodigos" Type="Self.libroscodigos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="codigos">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="libroscodigos">
+              <PropertyRef Name="CodigoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_LibrosCodigos_Libros">
+          <End Role="libros" Type="Self.libros" Multiplicity="0..1" />
+          <End Role="libroscodigos" Type="Self.libroscodigos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="libros">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="libroscodigos">
+              <PropertyRef Name="LibroId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="libros_ibfk_1">
+          <End Role="especialidades" Type="Self.especialidades" Multiplicity="0..1" />
+          <End Role="libros" Type="Self.libros" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="especialidades">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="libros">
+              <PropertyRef Name="EspecialidadId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="libroscategorias_ibfk_1">
+          <End Role="libros" Type="Self.libros" Multiplicity="1" />
+          <End Role="libroscategorias" Type="Self.libroscategorias" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="libros">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="libroscategorias">
+              <PropertyRef Name="LibroId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="libroscategorias_ibfk_2">
+          <End Role="categorias" Type="Self.categorias" Multiplicity="1" />
+          <End Role="libroscategorias" Type="Self.libroscategorias" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="categorias">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="libroscategorias">
+              <PropertyRef Name="CategoriaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="versiones_ibfk_1">
+          <End Role="libros" Type="Self.libros" Multiplicity="0..1" />
+          <End Role="versiones" Type="Self.versiones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="libros">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="versiones">
+              <PropertyRef Name="LibroId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="alfadbModelStoreContainer">
+          <EntitySet Name="categorias" EntityType="Self.categorias" Schema="alfadb" store:Type="Tables" />
+          <EntitySet Name="codigos" EntityType="Self.codigos" Schema="alfadb" store:Type="Tables" />
+          <EntitySet Name="especialidades" EntityType="Self.especialidades" Schema="alfadb" store:Type="Tables" />
+          <EntitySet Name="libros" EntityType="Self.libros" Schema="alfadb" store:Type="Tables" />
+          <EntitySet Name="libroscategorias" EntityType="Self.libroscategorias" Schema="alfadb" store:Type="Tables" />
+          <EntitySet Name="libroscodigos" EntityType="Self.libroscodigos" Schema="alfadb" store:Type="Tables" />
+          <EntitySet Name="versiones" EntityType="Self.versiones" Schema="alfadb" store:Type="Tables" />
+          <AssociationSet Name="fk_LibrosCodigos_Codigos" Association="Self.fk_LibrosCodigos_Codigos">
+            <End Role="codigos" EntitySet="codigos" />
+            <End Role="libroscodigos" EntitySet="libroscodigos" />
+          </AssociationSet>
+          <AssociationSet Name="fk_LibrosCodigos_Libros" Association="Self.fk_LibrosCodigos_Libros">
+            <End Role="libros" EntitySet="libros" />
+            <End Role="libroscodigos" EntitySet="libroscodigos" />
+          </AssociationSet>
+          <AssociationSet Name="libros_ibfk_1" Association="Self.libros_ibfk_1">
+            <End Role="especialidades" EntitySet="especialidades" />
+            <End Role="libros" EntitySet="libros" />
+          </AssociationSet>
+          <AssociationSet Name="libroscategorias_ibfk_1" Association="Self.libroscategorias_ibfk_1">
+            <End Role="libros" EntitySet="libros" />
+            <End Role="libroscategorias" EntitySet="libroscategorias" />
+          </AssociationSet>
+          <AssociationSet Name="libroscategorias_ibfk_2" Association="Self.libroscategorias_ibfk_2">
+            <End Role="categorias" EntitySet="categorias" />
+            <End Role="libroscategorias" EntitySet="libroscategorias" />
+          </AssociationSet>
+          <AssociationSet Name="versiones_ibfk_1" Association="Self.versiones_ibfk_1">
+            <End Role="libros" EntitySet="libros" />
+            <End Role="versiones" EntitySet="versiones" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="alfadbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="alfadbEntities" annotation:LazyLoadingEnabled="false">
+          <EntitySet Name="categorias" EntityType="alfadbModel.categorias" />
+          <EntitySet Name="codigos" EntityType="alfadbModel.codigos" />
+          <EntitySet Name="especialidades" EntityType="alfadbModel.especialidades" />
+          <EntitySet Name="libros" EntityType="alfadbModel.libros" />
+          <EntitySet Name="libroscategorias" EntityType="alfadbModel.libroscategorias" />
+          <EntitySet Name="libroscodigos" EntityType="alfadbModel.libroscodigos" />
+          <EntitySet Name="versiones" EntityType="alfadbModel.versiones" />
+          <AssociationSet Name="libroscategorias_ibfk_2" Association="alfadbModel.libroscategorias_ibfk_2">
+            <End Role="categorias" EntitySet="categorias" />
+            <End Role="libroscategorias" EntitySet="libroscategorias" />
+          </AssociationSet>
+          <AssociationSet Name="fk_LibrosCodigos_Codigos" Association="alfadbModel.fk_LibrosCodigos_Codigos">
+            <End Role="codigos" EntitySet="codigos" />
+            <End Role="libroscodigos" EntitySet="libroscodigos" />
+          </AssociationSet>
+          <AssociationSet Name="libros_ibfk_1" Association="alfadbModel.libros_ibfk_1">
+            <End Role="especialidades" EntitySet="especialidades" />
+            <End Role="libros" EntitySet="libros" />
+          </AssociationSet>
+          <AssociationSet Name="fk_LibrosCodigos_Libros" Association="alfadbModel.fk_LibrosCodigos_Libros">
+            <End Role="libros" EntitySet="libros" />
+            <End Role="libroscodigos" EntitySet="libroscodigos" />
+          </AssociationSet>
+          <AssociationSet Name="libroscategorias_ibfk_1" Association="alfadbModel.libroscategorias_ibfk_1">
+            <End Role="libros" EntitySet="libros" />
+            <End Role="libroscategorias" EntitySet="libroscategorias" />
+          </AssociationSet>
+          <AssociationSet Name="versiones_ibfk_1" Association="alfadbModel.versiones_ibfk_1">
+            <End Role="libros" EntitySet="libros" />
+            <End Role="versiones" EntitySet="versiones" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="categorias">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="libroscategorias" Relationship="alfadbModel.libroscategorias_ibfk_2" FromRole="categorias" ToRole="libroscategorias" />
+        </EntityType>
+        <EntityType Name="codigos">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Codigo" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="Tipo" Type="String" Nullable="false" MaxLength="65532" FixedLength="false" Unicode="false" />
+          <Property Name="Activo" Type="String" Nullable="false" MaxLength="65532" FixedLength="false" Unicode="false" />
+          <Property Name="TotalLibros" Type="Int32" Nullable="false" />
+          <Property Name="CantidadRestante" Type="Int32" />
+          <Property Name="UUID" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="libroscodigos" Relationship="alfadbModel.fk_LibrosCodigos_Codigos" FromRole="codigos" ToRole="libroscodigos" />
+        </EntityType>
+        <EntityType Name="especialidades">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="libros" Relationship="alfadbModel.libros_ibfk_1" FromRole="especialidades" ToRole="libros" />
+        </EntityType>
+        <EntityType Name="libros">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="NumeroPaginas" Type="Int32" />
+          <Property Name="AnoEdicion" Type="Int32" />
+          <Property Name="Grado" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="EspecialidadId" Type="Int64" />
+          <Property Name="Ruta" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="RutaThumbnails" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="Width" Type="Decimal" />
+          <Property Name="Height" Type="Decimal" />
+          <Property Name="Resena" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="tags" Type="String" Nullable="false" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="RutaImgResena" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="Version" Type="SByte" />
+          <NavigationProperty Name="especialidades" Relationship="alfadbModel.libros_ibfk_1" FromRole="libros" ToRole="especialidades" />
+          <NavigationProperty Name="libroscodigos" Relationship="alfadbModel.fk_LibrosCodigos_Libros" FromRole="libros" ToRole="libroscodigos" />
+          <NavigationProperty Name="libroscategorias" Relationship="alfadbModel.libroscategorias_ibfk_1" FromRole="libros" ToRole="libroscategorias" />
+          <NavigationProperty Name="versiones" Relationship="alfadbModel.versiones_ibfk_1" FromRole="libros" ToRole="versiones" />
+        </EntityType>
+        <EntityType Name="libroscategorias">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LibroId" Type="Int64" Nullable="false" />
+          <Property Name="CategoriaId" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="categorias" Relationship="alfadbModel.libroscategorias_ibfk_2" FromRole="libroscategorias" ToRole="categorias" />
+          <NavigationProperty Name="libros" Relationship="alfadbModel.libroscategorias_ibfk_1" FromRole="libroscategorias" ToRole="libros" />
+        </EntityType>
+        <EntityType Name="libroscodigos">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CodigoId" Type="Int64" Nullable="false" />
+          <Property Name="LibroId" Type="Int64" />
+          <Property Name="UUID" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="Activo" Type="String" Nullable="false" MaxLength="65532" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="codigos" Relationship="alfadbModel.fk_LibrosCodigos_Codigos" FromRole="libroscodigos" ToRole="codigos" />
+          <NavigationProperty Name="libros" Relationship="alfadbModel.fk_LibrosCodigos_Libros" FromRole="libroscodigos" ToRole="libros" />
+        </EntityType>
+        <EntityType Name="versiones">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LibroId" Type="Int64" />
+          <Property Name="Version" Type="SByte" />
+          <Property Name="NombreArchivo" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="libros" Relationship="alfadbModel.versiones_ibfk_1" FromRole="versiones" ToRole="libros" />
+        </EntityType>
+        <Association Name="libroscategorias_ibfk_2">
+          <End Type="alfadbModel.categorias" Role="categorias" Multiplicity="1" />
+          <End Type="alfadbModel.libroscategorias" Role="libroscategorias" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="categorias">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="libroscategorias">
+              <PropertyRef Name="CategoriaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_LibrosCodigos_Codigos">
+          <End Type="alfadbModel.codigos" Role="codigos" Multiplicity="1" />
+          <End Type="alfadbModel.libroscodigos" Role="libroscodigos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="codigos">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="libroscodigos">
+              <PropertyRef Name="CodigoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="libros_ibfk_1">
+          <End Type="alfadbModel.especialidades" Role="especialidades" Multiplicity="0..1" />
+          <End Type="alfadbModel.libros" Role="libros" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="especialidades">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="libros">
+              <PropertyRef Name="EspecialidadId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_LibrosCodigos_Libros">
+          <End Type="alfadbModel.libros" Role="libros" Multiplicity="0..1" />
+          <End Type="alfadbModel.libroscodigos" Role="libroscodigos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="libros">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="libroscodigos">
+              <PropertyRef Name="LibroId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="libroscategorias_ibfk_1">
+          <End Type="alfadbModel.libros" Role="libros" Multiplicity="1" />
+          <End Type="alfadbModel.libroscategorias" Role="libroscategorias" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="libros">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="libroscategorias">
+              <PropertyRef Name="LibroId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="versiones_ibfk_1">
+          <End Type="alfadbModel.libros" Role="libros" Multiplicity="0..1" />
+          <End Type="alfadbModel.versiones" Role="versiones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="libros">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="versiones">
+              <PropertyRef Name="LibroId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="alfadbModelStoreContainer" CdmEntityContainer="alfadbEntities">
+          <EntitySetMapping Name="categorias">
+            <EntityTypeMapping TypeName="alfadbModel.categorias">
+              <MappingFragment StoreEntitySet="categorias">
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="codigos">
+            <EntityTypeMapping TypeName="alfadbModel.codigos">
+              <MappingFragment StoreEntitySet="codigos">
+                <ScalarProperty Name="UUID" ColumnName="UUID" />
+                <ScalarProperty Name="CantidadRestante" ColumnName="CantidadRestante" />
+                <ScalarProperty Name="TotalLibros" ColumnName="TotalLibros" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="especialidades">
+            <EntityTypeMapping TypeName="alfadbModel.especialidades">
+              <MappingFragment StoreEntitySet="especialidades">
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="libros">
+            <EntityTypeMapping TypeName="alfadbModel.libros">
+              <MappingFragment StoreEntitySet="libros">
+                <ScalarProperty Name="Version" ColumnName="Version" />
+                <ScalarProperty Name="RutaImgResena" ColumnName="RutaImgResena" />
+                <ScalarProperty Name="tags" ColumnName="tags" />
+                <ScalarProperty Name="Resena" ColumnName="Resena" />
+                <ScalarProperty Name="Height" ColumnName="Height" />
+                <ScalarProperty Name="Width" ColumnName="Width" />
+                <ScalarProperty Name="RutaThumbnails" ColumnName="RutaThumbnails" />
+                <ScalarProperty Name="Ruta" ColumnName="Ruta" />
+                <ScalarProperty Name="EspecialidadId" ColumnName="EspecialidadId" />
+                <ScalarProperty Name="Grado" ColumnName="Grado" />
+                <ScalarProperty Name="AnoEdicion" ColumnName="AnoEdicion" />
+                <ScalarProperty Name="NumeroPaginas" ColumnName="NumeroPaginas" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="libroscategorias">
+            <EntityTypeMapping TypeName="alfadbModel.libroscategorias">
+              <MappingFragment StoreEntitySet="libroscategorias">
+                <ScalarProperty Name="CategoriaId" ColumnName="CategoriaId" />
+                <ScalarProperty Name="LibroId" ColumnName="LibroId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="libroscodigos">
+            <EntityTypeMapping TypeName="alfadbModel.libroscodigos">
+              <MappingFragment StoreEntitySet="libroscodigos">
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="UUID" ColumnName="UUID" />
+                <ScalarProperty Name="LibroId" ColumnName="LibroId" />
+                <ScalarProperty Name="CodigoId" ColumnName="CodigoId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="versiones">
+            <EntityTypeMapping TypeName="alfadbModel.versiones">
+              <MappingFragment StoreEntitySet="versiones">
+                <ScalarProperty Name="NombreArchivo" ColumnName="NombreArchivo" />
+                <ScalarProperty Name="Version" ColumnName="Version" />
+                <ScalarProperty Name="LibroId" ColumnName="LibroId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

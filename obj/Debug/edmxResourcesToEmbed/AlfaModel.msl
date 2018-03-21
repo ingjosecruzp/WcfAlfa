@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="alfadbModelStoreContainer" CdmEntityContainer="alfadbEntities">
+    <EntitySetMapping Name="categorias">
+      <EntityTypeMapping TypeName="alfadbModel.categorias">
+        <MappingFragment StoreEntitySet="categorias">
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="codigos">
+      <EntityTypeMapping TypeName="alfadbModel.codigos">
+        <MappingFragment StoreEntitySet="codigos">
+          <ScalarProperty Name="UUID" ColumnName="UUID" />
+          <ScalarProperty Name="CantidadRestante" ColumnName="CantidadRestante" />
+          <ScalarProperty Name="TotalLibros" ColumnName="TotalLibros" />
+          <ScalarProperty Name="Activo" ColumnName="Activo" />
+          <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+          <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="especialidades">
+      <EntityTypeMapping TypeName="alfadbModel.especialidades">
+        <MappingFragment StoreEntitySet="especialidades">
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="libros">
+      <EntityTypeMapping TypeName="alfadbModel.libros">
+        <MappingFragment StoreEntitySet="libros">
+          <ScalarProperty Name="Version" ColumnName="Version" />
+          <ScalarProperty Name="RutaImgResena" ColumnName="RutaImgResena" />
+          <ScalarProperty Name="tags" ColumnName="tags" />
+          <ScalarProperty Name="Resena" ColumnName="Resena" />
+          <ScalarProperty Name="Height" ColumnName="Height" />
+          <ScalarProperty Name="Width" ColumnName="Width" />
+          <ScalarProperty Name="RutaThumbnails" ColumnName="RutaThumbnails" />
+          <ScalarProperty Name="Ruta" ColumnName="Ruta" />
+          <ScalarProperty Name="EspecialidadId" ColumnName="EspecialidadId" />
+          <ScalarProperty Name="Grado" ColumnName="Grado" />
+          <ScalarProperty Name="AnoEdicion" ColumnName="AnoEdicion" />
+          <ScalarProperty Name="NumeroPaginas" ColumnName="NumeroPaginas" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="libroscategorias">
+      <EntityTypeMapping TypeName="alfadbModel.libroscategorias">
+        <MappingFragment StoreEntitySet="libroscategorias">
+          <ScalarProperty Name="CategoriaId" ColumnName="CategoriaId" />
+          <ScalarProperty Name="LibroId" ColumnName="LibroId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="libroscodigos">
+      <EntityTypeMapping TypeName="alfadbModel.libroscodigos">
+        <MappingFragment StoreEntitySet="libroscodigos">
+          <ScalarProperty Name="Activo" ColumnName="Activo" />
+          <ScalarProperty Name="UUID" ColumnName="UUID" />
+          <ScalarProperty Name="LibroId" ColumnName="LibroId" />
+          <ScalarProperty Name="CodigoId" ColumnName="CodigoId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="versiones">
+      <EntityTypeMapping TypeName="alfadbModel.versiones">
+        <MappingFragment StoreEntitySet="versiones">
+          <ScalarProperty Name="NombreArchivo" ColumnName="NombreArchivo" />
+          <ScalarProperty Name="Version" ColumnName="Version" />
+          <ScalarProperty Name="LibroId" ColumnName="LibroId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

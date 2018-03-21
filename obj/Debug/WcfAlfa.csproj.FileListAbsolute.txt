@@ -1,0 +1,15 @@
+C:\Users\jparedes\Documents\Visual Studio 2015\Projects\WcfAlfa\WcfAlfa\bin\WcfAlfa.dll.config
+C:\Users\jparedes\Documents\Visual Studio 2015\Projects\WcfAlfa\WcfAlfa\bin\WcfAlfa.dll
+C:\Users\jparedes\Documents\Visual Studio 2015\Projects\WcfAlfa\WcfAlfa\bin\WcfAlfa.pdb
+C:\Users\jparedes\Documents\Visual Studio 2015\Projects\WcfAlfa\WcfAlfa\bin\EntityFramework.dll
+C:\Users\jparedes\Documents\Visual Studio 2015\Projects\WcfAlfa\WcfAlfa\bin\EntityFramework.SqlServer.dll
+C:\Users\jparedes\Documents\Visual Studio 2015\Projects\WcfAlfa\WcfAlfa\bin\JWT.dll
+C:\Users\jparedes\Documents\Visual Studio 2015\Projects\WcfAlfa\WcfAlfa\bin\MySql.Data.dll
+C:\Users\jparedes\Documents\Visual Studio 2015\Projects\WcfAlfa\WcfAlfa\bin\MySql.Data.Entity.EF6.dll
+C:\Users\jparedes\Documents\Visual Studio 2015\Projects\WcfAlfa\WcfAlfa\bin\Newtonsoft.Json.dll
+C:\Users\jparedes\Documents\Visual Studio 2015\Projects\WcfAlfa\WcfAlfa\bin\EntityFramework.xml
+C:\Users\jparedes\Documents\Visual Studio 2015\Projects\WcfAlfa\WcfAlfa\bin\EntityFramework.SqlServer.xml
+C:\Users\jparedes\Documents\Visual Studio 2015\Projects\WcfAlfa\WcfAlfa\bin\Newtonsoft.Json.xml
+C:\Users\jparedes\Documents\Visual Studio 2015\Projects\WcfAlfa\WcfAlfa\obj\Debug\WcfAlfa.dll
+C:\Users\jparedes\Documents\Visual Studio 2015\Projects\WcfAlfa\WcfAlfa\obj\Debug\WcfAlfa.pdb
+C:\Users\jparedes\Documents\Visual Studio 2015\Projects\WcfAlfa\WcfAlfa\obj\Debug\WcfAlfa.csprojResolveAssemblyReference.cache
